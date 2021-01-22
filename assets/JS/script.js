@@ -1,19 +1,32 @@
 var startButton = document.getElementById("start-btn");
 var questionContainerElements = document.getElementById("questions-container");
+var shuffleQuestions, currentQuestionIndex;
+var questionElement = document.getElementById("question");
+var answerButtonsElement = document.getElementById("answer-buttons")
 
 startButton.addEventListener("click", startGame);
-
-
 
 function startGame() {
 console.log("started");
 startButton.classList.add("hide");
+shuffleQuestions = questions.sort(()=> Math.random() - .5);
+currentQuestionIndex = 0;
 questionContainerElements.classList.remove("hide");
 setNextQuestion()
 }
 
 function setNextQuestion() {
+    showQuestion(shuffleQuestions[currentQuestionIndex])
+}
 
+function showQuestion(question ) {
+    questionElement.innerText = question.question;
+    question.answers.forEach(answer => {
+        var button = document.createElement("button");
+        button.innerText = answer.text;
+        button.classList.add()
+    })
+     
 }
 
 function selectAnswer() {
