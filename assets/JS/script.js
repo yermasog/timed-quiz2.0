@@ -6,8 +6,8 @@ var questionElement = document.getElementById("question");
 var answerButtonsElement = document.getElementById("answer-buttons")
 var secondsLeft = 60;
 var timer = document.getElementById("timer");
-var scoreCounter = document.getElementById("score");
-var score = 0
+var score = document.getElementById("score");
+var endGame = document.getElementById("end-game")
 
 startButton.addEventListener("click", startGame);
 nextButton.addEventListener("click", () => {
@@ -19,18 +19,18 @@ function timeLeft() {
     timerInterval = setInterval(function () {
         secondsLeft--;
         timer.textContent = "Time: " + secondsLeft;
-        scoreCounter.textContent = "Score: " + score;
+        // scoreCounter.textContent = "Score: " + score;
 
 
-        if (secondsLeft === 0) {
+        if (secondsLeft <= 0) {
             clearInterval(timerInterval);
+            gameEnd()
             
         }
     }, 1000);
 }
 
 function startGame() {
-console.log("started");
 startButton.classList.add("hide");
 shuffleQuestions = questions.sort(()=> Math.random() - .5);
 currentQuestionIndex = 0;
@@ -42,6 +42,7 @@ setNextQuestion()
 function setNextQuestion() {
     resetState()
     showQuestion(shuffleQuestions[currentQuestionIndex])
+   showQuestion(currentQuestionIndex)
 }
 
 function showQuestion(question ) {
@@ -59,6 +60,8 @@ function showQuestion(question ) {
      
 }
 
+
+
 function setStatusClass (element, correct) {
     clearStatusClass(element);
     if (correct) {
@@ -66,7 +69,7 @@ function setStatusClass (element, correct) {
         score = score + 1
     } else {
         element.classList.add("wrong");
-        secondsLeft -10
+        secondsLeft = secondsLeft -5
     }
 }
 
@@ -92,8 +95,18 @@ function selectAnswer(e) {
     })
     if (shuffleQuestions.length > currentQuestionIndex + 1 ) {
         nextButton.classList.remove("hide") 
-    } else {alert("game over")}
+    } else 
+    // endGame.classList.remove("hide")
     nextButton.classList.remove("hide")
+   
+
+}
+
+function gameEnd() {
+endGame.classList.remove("hide");
+nextButton.classList.add("hide")
+questionContainerElements.classList.add("hide");
+score.textContent = secondsLeft
 }
 
 
